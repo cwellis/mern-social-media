@@ -9,23 +9,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { uploadImage, uploadPost } from '../../actions/uploadAction'
 
 const PostShare = () => {
+    const loading = useSelector((state) => state.postReducer.uploading)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.authReducer.authData )
     const [image, setImage] = useState(null)
     const imageRef = useRef()
     const desc = useRef()
-    const onImageChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            let img = e.target.files[0]
+    const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0]
             setImage(img);
         }
+    }
+
+    const reset = () => {
+        setImage(null);
+        desc.current.value=""
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const newPost = {
-            userId: user._id,
+        userId: user._id,
             desc: desc.current.value
         }
 
@@ -37,23 +45,23 @@ const PostShare = () => {
             newPost.image = filename;
             console.log(newPost)
             try {
-                dispatch(uploadImage(image))
+                dispatch(uploadImage(data))
             } catch (error) {
                 console.log(error)
             }
         }
-
         dispatch(uploadPost(newPost))
-
+        reset()
     }
 
   return (
     <div className="PostShare">
-        <img src={ProfileImage} alt="" />
+        <img src={user.coverPicture ? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
 
         <div>
             <input 
-                ref = { desc } required
+                ref = { desc }
+                required
                 type="text"
                 placeholder="What's Happening" />
 
@@ -90,8 +98,9 @@ const PostShare = () => {
                 <button 
                     className='button ps-button'
                     onClick={handleSubmit}
+                    disabled={loading}
                 >
-                    Share
+                    {loading ? "Uploading..." : "Share"}
                 </button>
                 <div style={{display: 'none'}}>
                     <input 

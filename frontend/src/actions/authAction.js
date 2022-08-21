@@ -1,4 +1,4 @@
-import * as authApi from '../api/authRequest'
+import * as authApi from '../api/authRequest.js'
 
 export const login = (formData) => async(dispatch) => {
 

@@ -3,10 +3,32 @@ import { useState } from 'react'
 import './InfoCard.css'
 import {UilPen} from '@iconscout/react-unicons'
 import ProfileModal from '../ProfileModal/ProfileModal'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
 const InfoCard = () => {
 
     const [modalOpened, setModalOpened] = useState(false)
+
+    const dispatch = useDispatch()
+    const params = useParams()
+
+    const profileUserId = params.id
+    const [profileUser, setProfileUser] = useState({})
+
+    const {user} = useSelector((state)=>state.authReducer.authData)
+
+    useEffect(() => {
+        const fetchProfileUser = async() => {
+            if (profileUserId === user._id) {
+                setProfileUser(user)
+            } else {
+                const profileUser = await UserApi.getUser(profileUserId)
+                setProfileUser(profileUser)
+            }
+        }
+        fetchProfileUser()
+    }, [user])
 
   return (
     <div className="InfoCard">

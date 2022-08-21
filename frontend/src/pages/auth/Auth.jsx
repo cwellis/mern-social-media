@@ -10,7 +10,6 @@ const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.authReducer.loading)
   const [isSignup, setIsSignup] = useState(true);
-  console.log(loading)
   const [data, setData] = useState(
     {firstname: '', 
     lastname: '', 
@@ -102,7 +101,8 @@ const Auth = () => {
                 </div>
 
                 <div>
-                    <input type="password" 
+                    <input 
+                    type="password" 
                     className="infoInput"
                     name='password'
                     placeholder='Password'
@@ -111,7 +111,8 @@ const Auth = () => {
                     />
                 
                     {isSignup &&
-                    <input type="password" 
+                    <input 
+                    type="password" 
                     className="infoInput"
                     name='confirmpass'
                     placeholder='Confirm Password'

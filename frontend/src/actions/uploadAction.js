@@ -1,21 +1,21 @@
-import * as uploadApi from '../api/uploadRequest'
+import * as UploadApi from '../api/UploadRequest'
 
 export const uploadImage = (data) => async(dispatch) => {
     try {
-        await uploadApi.uploadImage(data)
+        await UploadApi.uploadImage(data)
     } catch (error) {
         console.log(error)
     }
 }
 
 export const uploadPost = (data) => async(dispatch) => {
-    dispatch({ type: "UPLOAD_START" })
+    dispatch({type: "UPLOAD_START"})
 
     try {
-        const newPost = await uploadApi.uploadPost(data)
-        dispatch({ type: "UPLOAD_SUCCESS" })
+        const newPost = await UploadApi.uploadPost(data)
+        dispatch({type: "UPLOAD_SUCCESS", data: newPost.data})
     } catch (error) {
         console.log(error)
-        dispatch({ type: "UPLOAD_FAIL" })
+        dispatch({type: "UPLOAD_FAIL"})
     }
 }

@@ -2,16 +2,20 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from 'cors';
-import authRoute from './routes/authRoute.js'
-import userRoute from './routes/userRoute.js'
-import postRoute from './routes/postRoute.js'
-import uploadRoute from './routes/uploadRoute.js'
+import AuthRoute from './routes/AuthRoute.js'
+import UserRoute from './routes/UserRoute.js'
+import PostRoute from './routes/PostRoute.js'
+import UploadRoute from './routes/UploadRoute.js'
 
 // pull env files
 dotenv.config();
 
 // express app
 const app = express();
+
+// to serve images for public
+app.use(express.static('public'))
+app.use('/images', express.static("images"))
 
 // middleware
 app.use(express.json())
@@ -36,7 +40,7 @@ mongoose.connect(process.env.MONGO_DB, {
 
 
 // usage of routes
-app.use('/auth', authRoute)
-app.use('/user', userRoute)
-app.use('/post', postRoute)
-app.use('/upload', uploadRoute)
+app.use('/auth', AuthRoute)
+app.use('/user', UserRoute)
+app.use('/post', PostRoute)
+app.use('/upload', UploadRoute)
