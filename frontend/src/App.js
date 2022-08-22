@@ -1,8 +1,8 @@
 import "./App.css"
-import Home from "./pages/Home/Home";
-import Profile from './pages/Profile/Profile'
-import Auth from "./pages/Auth/Auth";
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from "./pages/Home/Home";
+import Auth from "./pages/Auth/Auth";
+import Profile from './pages/Profile/Profile'
 import { useSelector } from 'react-redux'
 
 function App() {
@@ -25,13 +25,13 @@ function App() {
           />
 
           <Route 
-            // path='/auth' 
+            path='/auth' 
             element={ user ? <Navigate to='../home' /> : <Auth /> } 
           />
 
           <Route
             path='/profile/:id' 
-            element={user ? <Profile /> : <Navigate to="../auth"/>} 
+            element={user ? <Profile /> : <Navigate to="../auth" />} 
           />
 
         </Routes>
